@@ -13,9 +13,8 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
 ## Installation
 
-1. After you have your Zen Cart setup, follow these simple steps:
-  Signup at (paylike.io) [https://paylike.io] (it’s free)
-  
+  After you have your Zen Cart setup, follow these simple steps:
+  1. Signup at [paylike.io](https://paylike.io) (it’s free)
   1. Create a live account
   1. Create an app key for your Zen Cart website
   1. Upload the files in the upload folder to your root zen cart installation.
