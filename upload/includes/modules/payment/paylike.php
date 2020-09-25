@@ -195,14 +195,14 @@ class paylike extends base {
 	 *
 	 */
 	function process_button() {
-		global $db, $order, $order_total_modules;
+		global $db, $order, $order_total_modules, $currencies;
 
 		// construct payment payload
 		$payment_payload = [
 			'publicId'   => $this->get_public_key(),
 			'popUpTitle' => MODULE_PAYMENT_PAYLIKE_POPUP_TEXT_TITLE,
 			'currency'   => $order->info['currency'],
-			'amount'     => cf_paylike_amount( $order->info['total'], $order->info['currency'] ),
+			'amount'     => cf_paylike_amount( $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']), $order->info['currency'] ),
 			'locale'     => ( $_SESSION['languages_code'] ) ? $_SESSION['languages_code'] : 'en_US',
 			'orderId'    => $this->get_order_id(),
 			'products'   => json_encode( $this->get_products_from_order( $order ) ),
@@ -271,7 +271,7 @@ class paylike extends base {
 	 * and if the amounts match
 	 */
 	function before_process() {
-		global $order, $messageStack;
+		global $order, $messageStack, $currencies;
 
 		if ( $_POST['txn_no'] == null || $_POST['txn_no'] == '' ) {
 			$messageStack->add_session( 'checkout_payment', PL_ORDER_ERROR_TRANSACTION_MISSING . ' <!-- [' . $this->code . '] -->', 'error' );
@@ -289,7 +289,7 @@ class paylike extends base {
 			return;
 		}
 		// amount convert based on currency
-		$amount = cf_paylike_amount( $order->info['total'], $order->info['currency'] );
+		$amount = cf_paylike_amount( $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']), $order->info['currency'] );
 		if ( (int) $response['amount'] != (int) $amount ) {
 			$messageStack->add_session( 'checkout_payment', PL_ORDER_ERROR_TRANSACTION_AMOUNT_MISMATCH . ' <!-- [' . $this->code . '] -->', 'error' );
 			zen_redirect( zen_href_link( FILENAME_CHECKOUT_PAYMENT, '', 'SSL', true, false ) );
@@ -303,12 +303,13 @@ class paylike extends base {
 	 * Update order, capture if needed, store tr
 	 */
 	function after_process() {
-		global $insert_id, $order;
+		global $insert_id, $order, $currencies;
 
 		$data = [
 			'customer_id'    => $_SESSION['customer_id'],
 			'transaction_id' => $_POST['txn_no'],
-			'amount'         => cf_paylike_amount( $order->info['total'], $order->info['currency'] ),
+			/** Converted amount to order currency */
+			'amount'         => cf_paylike_amount( $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']), $order->info['currency'] ),
 			'currency'       => $order->info['currency'],
 			'time'           => date( "Y-m-d h:i:s" )
 		];
@@ -333,8 +334,9 @@ class paylike extends base {
 	 * @param $order_id
 	 */
 	function update_order_history( $order, $data, $order_id ) {
+		global $currencies;
 		// TABLE_ORDERS_STATUS_HISTORY
-		$comments = PL_COMMENT_AUTHORIZE . $data['transaction_id'] . "\n" . PL_COMMENT_AMOUNT . number_format( (float) $order->info['total'], 2, '.', '' ) . ' ' . $data['currency'];
+		$comments = PL_COMMENT_AUTHORIZE . $data['transaction_id'] . "\n" . PL_COMMENT_AMOUNT . number_format( (float) $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']), 2, '.', '' ) . ' ' . $data['currency'];
 		$sql1     = [
 			'comments'          => $comments,
 			'orders_id'         => (int) $order_id,
