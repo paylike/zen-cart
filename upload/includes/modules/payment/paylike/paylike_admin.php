@@ -165,7 +165,9 @@ class paylike_admin {
 	 * @return bool
 	 */
 	function capture( $app_id, $order_id, $captureType, $amount, $currency, $note, $silent = false ) {
-		global $db, $messageStack, $order;
+		global $db, $messageStack, $order, $currencies;
+		/** Convert amount to order currency */
+		$amount_converted = $currencies->value($amount, true, $order->info['currency'], $order->info['currency_value']);
 
 		if ( $amount <= 0 ) {
 			$error = '<!-- Amount is null or empty. Order: ' . $order_id . ' -->';
@@ -185,7 +187,7 @@ class paylike_admin {
 			$new_order_status = ( $new_order_status > 0 ? $new_order_status : 2 );
 
 			// amount convert based on currency
-			$captureAmount = cf_paylike_amount( $amount, $currency );
+			$captureAmount = cf_paylike_amount( $amount_converted, $currency );
 
 			$paylike_client  = new Paylike\Paylike( $app_id );
 			$paylike_capture = $paylike_client->transactions()->capture( $transaction_ID, array(
@@ -196,7 +198,7 @@ class paylike_admin {
 				// update status in paylike
 				zen_db_perform( 'paylike', array( 'transaction_status' => 'capture' ), 'update', 'transaction_id = "' . $paylike_capture['id'] . '"' );
 				// update orders_status_history
-				$comments = PL_COMMENT_CAPTURE . $paylike_capture['id'] . "\n" . PL_COMMENT_AMOUNT . number_format( (float) $amount, 2, '.', '' ) . ' ' . $currency;
+				$comments = PL_COMMENT_CAPTURE . $paylike_capture['id'] . "\n" . PL_COMMENT_AMOUNT . number_format( (float) $amount_converted, 2, '.', '' ) . ' ' . $currency;
 
 				$this->update_order_history( $comments, $new_order_status, $order_id );
 				if ( ! $silent ) {
@@ -241,7 +243,9 @@ class paylike_admin {
 	 * @return bool
 	 */
 	function refund( $app_id, $order_id, $amount, $note ) {
-		global $db, $messageStack, $order;
+		global $db, $messageStack, $order, $currencies;
+		/** Convert amount to order currency */
+		$order_total_converted = $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']);
 
 		$transaction_ID = $this->get_transaction_id_from_order( $order_id );
 		if ( ! $transaction_ID ) {
@@ -261,13 +265,13 @@ class paylike_admin {
 			// force conversion to supported currencies: USD, GBP, CAD, EUR, AUD, NZD
 			$currency = $order->info['currency'];
 			// amount convert based on currency
-			$amount = $order->info['total'];
+			$amount = $order_total_converted;
 		}
 
 		try {
 			//@TODO: Read current order status and determine best status to set this to
 			$refundAmount    = cf_paylike_amount( $amount, $currency );
-			$orderAmount     = cf_paylike_amount( $order->info['total'], $currency );
+			$orderAmount     = cf_paylike_amount( $order_total_converted, $currency );
 			$isPartialRefund = false;
 
 			// new status
@@ -320,7 +324,9 @@ class paylike_admin {
 	 * @return bool
 	 */
 	function void( $app_id, $order_id, $note ) {
-		global $db, $messageStack, $order;
+		global $db, $messageStack, $order, $currencies;
+		/** Convert amount to order currency */
+		$order_total_converted = $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']);
 
 		$transaction_ID = $this->get_transaction_id_from_order( $order_id );
 		if ( ! $transaction_ID ) {
@@ -335,7 +341,7 @@ class paylike_admin {
 			// force conversion to supported currencies: USD, GBP, CAD, EUR, AUD, NZD
 			$currency = $order->info['currency'];
 			// amount convert based on currency
-			$voidAmt = cf_paylike_amount( $order->info['total'], $currency );
+			$voidAmt = cf_paylike_amount( $order_total_converted, $currency );
 
 			$paylike_client = new Paylike\Paylike( $app_id );
 			$paylike_void   = $paylike_client->transactions()->void( $transaction_ID, array(
@@ -346,7 +352,7 @@ class paylike_admin {
 				// update status in paylike
 				zen_db_perform( 'paylike', array( 'transaction_status' => 'void' ), 'update', 'transaction_id = "' . $paylike_void['id'] . '"' );
 				// update orders_status_history
-				$comments = PL_COMMENT_VOID . $paylike_void['id'] . "\n" . PL_COMMENT_AMOUNT . number_format( (float) $order->info['total'], 2, '.', '' ) . ' ' . $currency;
+				$comments = PL_COMMENT_VOID . $paylike_void['id'] . "\n" . PL_COMMENT_AMOUNT . number_format( (float) $order_total_converted, 2, '.', '' ) . ' ' . $currency;
 				$this->update_order_history( $comments, $new_order_status, $order_id );
 				// success message
 				$success = PL_COMMENT_VOID_SUCCESS . $order_id;
