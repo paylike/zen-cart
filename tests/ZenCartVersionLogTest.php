@@ -12,7 +12,7 @@ use Facebook\WebDriver\WebDriverExpectedCondition;
 use Lmc\Steward\Test\AbstractTestCase;
 
 /**
- * @group thirtybees_version_log
+ * @group zencart_version_log
  */
 class ZenCartVersionLogTest extends AbstractTestCase {
 

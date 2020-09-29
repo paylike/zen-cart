@@ -7,7 +7,8 @@ As you can see the plugin is bundled with selenium testing on this repository. Y
 
 * A ZenCart installation is required on ZenCart
 * You also need to have a test client account with previous purchases and an admin account for which you set the credentials in the .env file
-* Lastly you need to have the currency selector available on the frontend
+* Lastly you need to have the currency selector available on the frontend with all the currencies that are tested enabled
+* Make sure that the product at /index.php?main_page=product_info&cPath=1_5&products_id=27 has enough stock and is a simple product
 
 ## Getting started
 
@@ -24,8 +25,8 @@ ADMIN_PREFIX="admin251j3cm2b"
 
 3. Start the testing server. See
 [Steward readme page](https://github.com/lmc-eu/steward#4-run-your-tests)
-4. Run  ./vendor/bin/steward run staging chrome --group="thirtybees_test" -vv for the short test
-5. Run  ./vendor/bin/steward run staging chrome -vv to go trough all the available tests.
+4. Run  ./vendor/bin/steward run staging chrome --group="zencart_test" -vv for the short test
+5. Run  ./vendor/bin/steward run staging chrome -vv to go through all the available tests.
 
 ## Problems
 

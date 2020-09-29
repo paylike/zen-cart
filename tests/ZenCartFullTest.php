@@ -18,33 +18,33 @@ class ZenCartFullTest extends AbstractTestCase {
 
 	public $runner;
 
-//	/**
-//	 * @throws NoSuchElementException
-//	 * @throws TimeOutException
-//	 * @throws UnexpectedTagNameException
-//	 */
-//	public function testUsdPaymentInstant() {
-//		$this->runner = new ZenCartRunner( $this );
-//		$this->runner->ready( array(
-//				'capture_mode' => 'Instant',
-//			)
-//		);
-//	}
-//
-//	/**
-//	 *
-//	 * @throws NoSuchElementException
-//	 * @throws TimeOutException
-//	 * @throws UnexpectedTagNameException
-//	 */
-//	public function testUsdPaymentDelayed() {
-//		$this->runner = new ZenCartRunner( $this );
-//		$this->runner->ready( array(
-//				'currency'     => 'USD',
-//				'capture_mode' => 'Delayed',
-//			)
-//		);
-//	}
+	/**
+	 * @throws NoSuchElementException
+	 * @throws TimeOutException
+	 * @throws UnexpectedTagNameException
+	 */
+	public function testUsdPaymentInstant() {
+		$this->runner = new ZenCartRunner( $this );
+		$this->runner->ready( array(
+				'capture_mode' => 'Instant',
+			)
+		);
+	}
+
+	/**
+	 *
+	 * @throws NoSuchElementException
+	 * @throws TimeOutException
+	 * @throws UnexpectedTagNameException
+	 */
+	public function testUsdPaymentDelayed() {
+		$this->runner = new ZenCartRunner( $this );
+		$this->runner->ready( array(
+				'currency'     => 'USD',
+				'capture_mode' => 'Delayed',
+			)
+		);
+	}
 
 	/**
 	 * @throws NoSuchElementException
@@ -60,36 +60,35 @@ class ZenCartFullTest extends AbstractTestCase {
 		);
 	}
 
-//
-//	/**
-//	 * @throws NoSuchElementException
-//	 * @throws TimeOutException
-//	 * @throws UnexpectedTagNameException
-//	 */
-//	public function testEURPaymentInstant() {
-//		$this->runner = new ZenCartRunner( $this );
-//		$this->runner->ready( array(
-//				'capture_mode' => 'Instant',
-//				'currency'     => 'EUR',
-//			)
-//		);
-//	}
-//
-//	/**
-//	 *
-//	 * @throws NoSuchElementException
-//	 * @throws TimeOutException
-//	 * @throws UnexpectedTagNameException
-//	 */
-//	public function testDkkPaymentInstant() {
-//		$this->runner = new ZenCartRunner( $this );
-//		$this->runner->ready( array(
-//				'currency'               => 'DKK',
-//				'capture_mode'           => 'Instant',
-//				'log_version' => true,
-//			)
-//		);
-//	}
+
+	/**
+	 * @throws NoSuchElementException
+	 * @throws TimeOutException
+	 * @throws UnexpectedTagNameException
+	 */
+	public function testEURPaymentInstant() {
+		$this->runner = new ZenCartRunner( $this );
+		$this->runner->ready( array(
+				'capture_mode' => 'Instant',
+				'currency'     => 'EUR',
+			)
+		);
+	}
+
+	/**
+	 *
+	 * @throws NoSuchElementException
+	 * @throws TimeOutException
+	 * @throws UnexpectedTagNameException
+	 */
+	public function testDkkPaymentInstant() {
+		$this->runner = new ZenCartRunner( $this );
+		$this->runner->ready( array(
+				'currency'     => 'DKK',
+				'capture_mode' => 'Instant'
+			)
+		);
+	}
 
 
 }

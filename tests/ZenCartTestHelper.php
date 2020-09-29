@@ -22,9 +22,8 @@ class ZenCartTestHelper {
 	public $currency = 'USD';
 	public $capture_mode = 'Delayed';
 	public $checkout_mode = 'before_order';
-	public $settings_check = false;
 	public $stop_email = false;
-	public $log_version = true;
+	public $log_version = false;
 	public $main_test;
 
 	/**
@@ -398,7 +397,7 @@ class ZenCartTestHelper {
 	 *
 	 * @return string
 	 */
-	private function helperGetUrl( $page, $is_admin = false ) {
+	public function helperGetUrl( $page, $is_admin = false ) {
 		if ( $is_admin ) {
 			$page = $this->admin_prefix . '/' . $page;
 		}
