@@ -6,7 +6,7 @@ available by a user.
 Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 
 
-## Supported Zen Cart versions [![Last succesfull test](https://log.derikon.ro/api/v1/log/read?tag=zencart&view=svg&label=ZenCart&key=ecommerce&background=FF7A00)](https://log.derikon.ro/api/v1/log/read?tag=cubecart&view=html)
+## Supported Zen Cart versions [![Last succesfull test](https://log.derikon.ro/api/v1/log/read?tag=zencart&view=svg&label=ZenCart&key=ecommerce&background=FF7A00)](https://log.derikon.ro/api/v1/log/read?tag=zencart&view=html)
 
 *The plugin has been tested with most versions of Zen Cart at every iteration. We recommend using the latest version of Zen Cart, but if that is not possible for some reason, test the plugin with your Zen Cart version and it would probably function properly.* 
 
