@@ -1,4 +1,4 @@
-# ZenCart plugin for Paylike [![Build Status](https://travis-ci.com/ionutcalara/zen-cart.svg?branch=master)](https://travis-ci.com/github/ionutcalara/zen-cart)
+# ZenCart plugin for Paylike
 
 This plugin is *not* developed or maintained by Paylike but kindly made
 available by a user.
