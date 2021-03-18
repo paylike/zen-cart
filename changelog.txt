@@ -1,0 +1,38 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+## 1.0.7 - 2021-03-18
+### Added
+- "changelog.txt" file for this plugin
+### Changed
+- external JavaScript file import from '3.js' to '6.js' in includes\modules\payment\paylike\paylike.php file
+
+## 1.0.6 - 2020-09-30
+### Changed
+- The README.md file
+
+## 1.0.5 - 2020-09-29
+### Updated
+- Test units
+- Testing.md
+- Readme.md
+- paylike_version.txt from "0.1" to "0.2"
+### Added
+- "travis.yml" testing configuration file
+
+## 1.0.4 - 2020-09-28
+### Added
+- Test units
+
+## 1.0.3 - 2020-09-25
+### BUG Fix
+- Apply currency changes option to amount to be paid via Paylike module - Apply currency changes option to transaction requests (Instant capture, Delayed Capture, Refund, Partial refund, Void)
+
+## 1.0.2 - 2020-05-08
+### Changed
+- The README.md file
+
+## 1.0.1 - 2019-03-26
+### Added
+- The README.md file
+- Initial commit

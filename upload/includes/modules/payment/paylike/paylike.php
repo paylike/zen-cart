@@ -9,7 +9,7 @@
 function get_paylike_pay_script( $payment_payload = array() ) {
 	$js = zen_draw_hidden_field( 'txn_no', '' ) . "\n\n";
 
-	$js .= '<script src="https://sdk.paylike.io/3.js"></script>' . "\n" .
+	$js .= '<script src="https://sdk.paylike.io/6.js"></script>' . "\n" .
 	       '<script type="text/javascript">' . "\n" .
 	       'let paylike = Paylike("' . $payment_payload['publicId'] . '")' . "\n" .
 	       'function pay(e) { ' . "\n" .
