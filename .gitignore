@@ -6,3 +6,5 @@
 !/*/vendor
 logs
 git-hooks
+node_modules
+cypress.env.json
