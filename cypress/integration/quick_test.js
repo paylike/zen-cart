@@ -11,7 +11,7 @@ describe('paylike plugin quick test', () => {
     before(() => {
         cy.goToPage(Cypress.env('ENV_ADMIN_URL'));
         TestMethods.loginIntoAdminBackend();
-        cy.goToPage(TestMethods.StoreUrl + '/index.php?_a=login');
+        cy.goToPage(TestMethods.StoreUrl);
         TestMethods.loginIntoClientAccount();
     });
 
@@ -44,6 +44,14 @@ describe('paylike plugin quick test', () => {
     /** Refund last created order (previously captured). */
     it('Process last order captured from admin panel to be refunded', () => {
         TestMethods.processOrderFromAdmin('refund');
+    });
+
+    /** Capture */
+    TestMethods.payWithSelectedCurrency(currency, 'capture');
+
+    /** Partial refund last created order (previously captured). */
+    it('Process last order captured from admin panel to be refunded', () => {
+        TestMethods.processOrderFromAdmin('refund', /*partialAmount*/ true);
     });
 
     /** Void */
