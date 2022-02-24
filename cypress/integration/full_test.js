@@ -11,7 +11,7 @@ describe('paylike plugin full test', () => {
     before(() => {
         cy.goToPage(Cypress.env('ENV_ADMIN_URL'));
         TestMethods.loginIntoAdminBackend();
-        cy.goToPage(TestMethods.StoreUrl + '/index.php?_a=login');
+        cy.goToPage(TestMethods.StoreUrl);
         TestMethods.loginIntoClientAccount();
     });
 
