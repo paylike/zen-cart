@@ -82,9 +82,15 @@ export var TestMethods = {
 
         cy.wait(500);
 
-        /** Select random product. */
-        var randomInt = PaylikeTestHelper.getRandomInt(/*max*/ 6);
-        cy.get('.centerBoxContentsNew a img').eq(randomInt).click();
+        /**
+         * Select specific product.
+         */
+        var randomInt = PaylikeTestHelper.getRandomInt(/*max*/ 1);
+        if (0 === randomInt) {
+            cy.goToPage(this.StoreUrl + '/index.php?main_page=product_info&cPath=53&products_id=115');
+        } else {
+            cy.goToPage(this.StoreUrl + '/index.php?main_page=product_info&cPath=23&products_id=49');
+        }
 
         cy.get('.button_in_cart').click();
 
@@ -98,7 +104,7 @@ export var TestMethods = {
         cy.get(`input[id*=${this.PaylikeName}]`).click();
 
         /** Continue checkout. */
-        cy.get('.button_continue_checkout').click();
+        cy.get('#paymentSubmit').click();
 
         /** Get total amount. */
         cy.get('#ottotal .totalBox').then($grandTotal => {
