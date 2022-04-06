@@ -10,6 +10,8 @@ require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/paylike_curre
  *  Copyright (c) 2019 Paylike
  */
 class paylike extends base {
+
+	const PAYLIKE_MODULE_VERSION = '1.1.0';
 	var $app_id, $code, $title, $description, $sort_order, $enabled, $form_action_url;
 
 	/**
@@ -201,8 +203,10 @@ class paylike extends base {
 		$payment_payload = [
 			'publicId'   => $this->get_public_key(),
 			'popUpTitle' => MODULE_PAYMENT_PAYLIKE_POPUP_TEXT_TITLE,
+			'test_mode'  => ("Test" == MODULE_PAYMENT_PAYLIKE_TXN_MODE) ? ('true') : ('false'),
 			'currency'   => $order->info['currency'],
 			'amount'     => cf_paylike_amount( $currencies->value($order->info['total'], true, $order->info['currency'], $order->info['currency_value']), $order->info['currency'] ),
+			'exponent'   => cf_paylike_currency($order->info['currency'])['exponent'],
 			'locale'     => ( $_SESSION['languages_code'] ) ? $_SESSION['languages_code'] : 'en_US',
 			'orderId'    => $this->get_order_id(),
 			'products'   => json_encode( $this->get_products_from_order( $order ) ),
@@ -213,7 +217,8 @@ class paylike extends base {
 				'phoneNo' => $order->customer['telephone'],
 				'ip'      => $_SERVER['REMOTE_ADDR']
 			],
-			'version'    => PROJECT_VERSION_MAJOR . '.' . PROJECT_VERSION_MINOR . ( PROJECT_VERSION_PATCH1 != '' ? 'p' . PROJECT_VERSION_PATCH1 : '' )
+			'version'    => PROJECT_VERSION_MAJOR . '.' . PROJECT_VERSION_MINOR . ( PROJECT_VERSION_PATCH1 != '' ? 'p' . PROJECT_VERSION_PATCH1 : '' ),
+			'paylike_module_version' => self::PAYLIKE_MODULE_VERSION,
 		];
 
 		return get_paylike_pay_script( $payment_payload );

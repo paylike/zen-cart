@@ -9,15 +9,20 @@
 function get_paylike_pay_script( $payment_payload = array() ) {
 	$js = zen_draw_hidden_field( 'txn_no', '' ) . "\n\n";
 
-	$js .= '<script src="https://sdk.paylike.io/3.js"></script>' . "\n" .
+	$js .= '<script src="https://sdk.paylike.io/10.js"></script>' . "\n" .
 	       '<script type="text/javascript">' . "\n" .
-	       'let paylike = Paylike("' . $payment_payload['publicId'] . '")' . "\n" .
+	       'let publicKey = {key: "' . $payment_payload['publicId'] . '"}' . "\n" .
+	       'let paylike = Paylike(publicKey)' . "\n" .
 	       'function pay(e) { ' . "\n" .
 	       ' e.preventDefault();' . "\n" .
-	       ' paylike.popup({' . "\n" .
+	       ' paylike.pay({' . "\n" .
+		   '    test: ' . $payment_payload['test_mode'] . ',' . "\n" .
 	       '    title: "' . $payment_payload['popUpTitle'] . '",' . "\n" .
-	       '    currency: "' . $payment_payload['currency'] . '",' . "\n" .
-	       '    amount: ' . $payment_payload['amount'] . ',' . "\n" .
+	       '    amount: { ' . "\n" .
+		   '        currency: "' . $payment_payload['currency'] . '",' . "\n" .
+		   '        exponent: ' . $payment_payload['exponent'] . ',' . "\n" .
+		   '        value: ' . $payment_payload['amount'] . ',' . "\n" .
+	       '	},' . "\n" .
 	       '    locale: "' . $payment_payload['locale'] . '",' . "\n" .
 	       '	custom: { ' . "\n" .
 	       '        orderId: "' . $payment_payload['orderId'] . '",' . "\n" .
@@ -33,6 +38,9 @@ function get_paylike_pay_script( $payment_payload = array() ) {
 	       '            name: "Zen Cart",' . "\n" .
 	       '            version: "' . $payment_payload['version'] . '",' . "\n" .
 	       '            },' . "\n" .
+	       '        module_version: {' . "\n" .
+	       '            version: "' . $payment_payload['paylike_module_version'] . '",' . "\n" .
+	       '            }' . "\n" .
 	       '		}' . "\n" .
 	       '	}, function(err, res) {' . "\n" .
 	       '		if (err) {' . "\n" .
