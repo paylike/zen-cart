@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.1.1 - 2022-04-21
+### Changed
+Prevent double load of PHP API library.
+
 ## 1.1.0 - 2021-08-26
 ### Changed
 - js SDK version upgrade to '10.js' in includes\modules\payment\paylike\paylike.php file
@@ -32,7 +36,8 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.3 - 2020-09-25
 ### BUG Fix
-- Apply currency changes option to amount to be paid via Paylike module - Apply currency changes option to transaction requests (Instant capture, Delayed Capture, Refund, Partial refund, Void)
+- Apply currency changes option to amount to be paid via Paylike module
+- Apply currency changes option to transaction requests (Instant capture, Delayed Capture, Refund, Partial refund, Void)
 
 ## 1.0.2 - 2020-05-08
 ### Changed

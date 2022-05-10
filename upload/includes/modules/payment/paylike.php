@@ -1,6 +1,9 @@
 <?php
+/** Prevent double load of PHP API library. */
+if (! class_exists('Paylike\\Paylike') ) {
+	require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'lunar/php-api/init.php' );
+}
 require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/paylike_admin.php' );
-require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/php-api/init.php' );
 require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/paylike.php' );
 require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/paylike_admin_actions.php' );
 require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/paylike_currencies.php' );
@@ -11,7 +14,7 @@ require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'paylike/paylike_curre
  */
 class paylike extends base {
 
-	const PAYLIKE_MODULE_VERSION = '1.1.0';
+	const PAYLIKE_MODULE_VERSION = '1.1.1';
 	var $app_id, $code, $title, $description, $sort_order, $enabled, $form_action_url;
 
 	/**

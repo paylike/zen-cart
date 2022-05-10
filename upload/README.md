@@ -50,11 +50,11 @@ The following actions are available by clicking on the `Click for Additional Pay
 ## Available features
 
 1. Capture
-   * Thirtybees admin panel: full capture
+   * Zencart admin panel: full capture
    * Paylike admin panel: full/partial capture
 2. Refund
-   * Thirtybees admin panel: full/partial refund
+   * Zencart admin panel: full/partial refund
    * Paylike admin panel: full/partial refund
 3. Void
-   * Thirtybees admin panel: full void
+   * Zencart admin panel: full void
    * Paylike admin panel: full/partial void
